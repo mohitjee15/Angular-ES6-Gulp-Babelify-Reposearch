@@ -1,9 +1,6 @@
-import template from './root.html';
 import controller from './rootController.js'
 
-const Root = {
-    template: template,
+export default {
+    templateUrl: 'components/root/root.tpl.html',
     controller: controller
 };
-
-export default Root;

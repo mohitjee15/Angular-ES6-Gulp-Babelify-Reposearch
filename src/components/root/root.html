@@ -1,6 +1,0 @@
-<div>
-    <repos-search-form class="col-sm-12" callback="$ctrl.RootController(userName)"></repos-search-form>
-    <repos-list class="col-sm-12" repos="$ctrl.repos" ng-if="$ctrl.repos.length"></repos-list>
-    <loader ng-if="(!$ctrl.repos || !$ctrl.repos.length) && !$ctrl.error"></loader>
-    <error-message class="col-sm-12" ng-if="$ctrl.error"></error-message>
-</div>

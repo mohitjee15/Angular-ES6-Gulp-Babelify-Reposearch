@@ -1,10 +1,6 @@
-import template from './reposSearchForm.html';
-
-const ReposSearchForm = {
-    template: template,
+export default {
+    templateUrl: 'components/reposSearchForm/reposSearchForm.tpl.html',
     bindings: {
         callback: '&'
     }
 };
-
-export default ReposSearchForm;

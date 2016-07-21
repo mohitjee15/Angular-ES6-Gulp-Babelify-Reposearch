@@ -1,7 +1,5 @@
-import template from './reposList.html';
-
 export default {
-    template: template,
+    templateUrl: 'components/reposList/reposList.tpl.html',
     bindings: {
         repos: '<'
     }

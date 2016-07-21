@@ -1,0 +1,10 @@
+<div>
+    <h3 class="page-header">User Based Github Repo Search</h3>
+    <div class="container">
+        <repos-search-form class="col-sm-12" callback="$ctrl.searchUser(userName)"></repos-search-form>
+        <h4 class="initial-message" class="col-sm-12" ng-if="$ctrl.initialMessage" ng-bind="$ctrl.initialMessage"></h4>
+        <repos-list class="col-sm-12" repos="$ctrl.repos" ng-if="$ctrl.repos.length"></repos-list>
+        <loader ng-show="$ctrl.isLoading"></loader>
+        <h4 class="col-sm-12 message" ng-if="$ctrl.message" ng-bind="$ctrl.message"></h4>
+    </div>
+</div>

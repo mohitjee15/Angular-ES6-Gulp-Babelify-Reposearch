@@ -1,15 +1,12 @@
-import angular from 'angular';
-import ngResource from 'angular-resource';
-import uiBootstrap from 'angular-ui-bootstrap';
-
-import factories from './factories/factoriesModule';
-import components from './components/componentsModule';
-//import bootstrap from 'bootstrap-webpack';
+import './factories/factoriesModule.js';
+import './components/componentsModule.js';
 
 angular.module('GithubSearch', [
-    'ngResource',
-    'ui.bootstrap',
+    'GithubSearch.vendor',
+    'GithubSearch.templates',
     'GithubSearch.factories',
     'GithubSearch.components'
 ]);
+
+
 

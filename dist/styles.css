@@ -1,0 +1,27 @@
+.page-header {
+  text-align: center;
+}
+.message {
+  color: #7d7d7d;
+  padding: 0 30px;
+}
+repos-search-form {
+  margin-bottom: 20px;
+}
+loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: table !important;
+  height: 100%;
+  width: 100%;
+  background: #ffffff;
+}
+loader > h3 {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}

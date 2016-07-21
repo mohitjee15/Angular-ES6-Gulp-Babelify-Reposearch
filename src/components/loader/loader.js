@@ -1,7 +1,3 @@
-import template from './loader.html';
-
-const Loader = {
-    template: template
+export default {
+    templateUrl: 'components/loader/loader.tpl.html'
 };
-
-export default Loader;
