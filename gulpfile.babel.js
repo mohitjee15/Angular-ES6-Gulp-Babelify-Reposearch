@@ -28,9 +28,7 @@ const paths = {
     templates: 'src/**/*.tpl.html'
 };
 
-const cssFileName = 'styles.css';
 const templateModuleName = 'GithubSearch.templates';
-
 
 gulp.task('scripts:source',  () => {
     var bundler = browserify(`${paths.src}/main.js`);
@@ -40,7 +38,7 @@ gulp.task('scripts:source',  () => {
         .on('error', function (err) { console.error(err); })
         .pipe(source('main.js'))
         .pipe(buffer())
-        //.pipe(uglify()) // Use any gulp plugins you want now
+        .pipe(uglify()) // Use any gulp plugins you want now
         .pipe(gulp.dest(paths.dist));
 });
 
@@ -52,7 +50,7 @@ gulp.task('scripts:vendor',  () => {
         .on('error', function (err) { console.error(err); })
         .pipe(source('vendor.js'))
         .pipe(buffer())
-        //.pipe(uglify()) // Use any gulp plugins you want now
+        .pipe(uglify()) // Use any gulp plugins you want now
         .pipe(gulp.dest(paths.dist));
 });
 
@@ -88,12 +86,17 @@ gulp.task('copy', () => {
         .pipe(gulp.dest(paths.dist))
 });
 
-gulp.task('clean', () => {
-
+gulp.task('test:lint', function() {
+    return gulp.src([
+            `${paths.src}/**/*.js`
+        ])
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('build', () => {
-    runSequence('templates', 'copy', 'scripts:source', 'styles:source', 'scripts:vendor', 'styles:bootstrap');
+    runSequence('templates', 'copy', 'scripts:source', 'styles:source', 'scripts:vendor', 'styles:bootstrap', 'test:lint');
 });
 
 

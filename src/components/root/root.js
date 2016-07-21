@@ -1,4 +1,4 @@
-import controller from './rootController.js'
+import controller from './rootController.js';
 
 export default {
     templateUrl: 'components/root/root.tpl.html',

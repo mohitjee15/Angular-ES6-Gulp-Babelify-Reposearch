@@ -1,0 +1,22 @@
+{
+	"esnext": true,
+
+    "globals": {
+      "console": false,
+
+      // jasmine
+      "it": true,
+      "describe": true,
+      "xit": false,
+      "xdescribe": false,
+      "fdescribe": false,
+      "fit": false,
+      "expect": true,
+      "beforeEach": true,
+      "afterEach": true,
+      "beforeAll": true,
+      "afterAll": true,
+      "jasmine": true,
+      "spyOn": true
+    }
+}
