@@ -3,9 +3,9 @@ class RootController {
     constructor(UserRepos) {
         vm = this;
         vm.UserRepos = UserRepos;
-        vm.resultsPerPage = 10;
-        vm.pageNo = 1;
         vm.message = 'Enter a github username and hit search';
+        vm.genericErrorMessage = 'Github API is not responding or you are offline';
+        vm.noReposMessage = 'The user has no git repositories';
     }
 
     searchUser(userName) {
@@ -18,10 +18,16 @@ class RootController {
         vm.repos = this.UserRepos.query(query);
 
         const error = (response) => {
-            vm.message = response.data ? response.data.message :  'Github API is not responding or you are offline';
+            vm.message = response.data ? response.data.message : vm.genericErrorMessage;
         };
 
-        vm.repos.$promise.then(angular.noop, error)['finally'](() => {
+        const success = () => {
+            if(!vm.repos.length) {
+                vm.message = vm.noReposMessage;
+            }
+        };
+
+        vm.repos.$promise.then(success, error)['finally'](() => {
             vm.isLoading = false;
         });
     }
