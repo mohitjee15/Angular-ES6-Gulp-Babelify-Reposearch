@@ -1,9 +1,3 @@
-require('babel-register')({
-    presets: [
-        'es2015'
-    ]
-});
-
 import babelify from 'babelify';
 import browserify from 'browserify';
 import buffer from 'vinyl-buffer';
@@ -12,12 +6,12 @@ import uglify from 'gulp-uglify';
 import gulp from 'gulp';
 import less from 'gulp-less';
 import clean  from  'gulp-clean' ;
-import concat  from  'gulp-concat' ;
-import jshint  from  'gulp-jshint' ;
+import concat  from  'gulp-concat';
 import html2Js  from  'gulp-ng-html2js' ;
 import plumber  from  'gulp-plumber' ;
 import sourcemaps from 'gulp-sourcemaps';
 import runSequence from 'run-sequence';
+import del from 'del';
 import { Server as KarmaServer } from 'karma';
 
 const paths = {
@@ -37,7 +31,7 @@ gulp.task('scripts:source',  () => {
     bundler.transform(babelify);
 
     bundler.bundle()
-        .on('error', function (err) { console.error(err); })
+        .on('error', (err) => { console.error(err); })
         .pipe(source('main.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init())
@@ -50,7 +44,7 @@ gulp.task('scripts:vendor',  () => {
     bundler.transform(babelify);
 
     bundler.bundle()
-        .on('error', function (err) { console.error(err); })
+        .on('error', (err) => { console.error(err); })
         .pipe(source('vendor.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init())
@@ -90,12 +84,6 @@ gulp.task('html', () => {
         .pipe(gulp.dest(paths.dist))
 });
 
-gulp.task('test:lint', () => {
-    return gulp.src(paths.sourceJs)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(jshint.reporter('fail'));
-});
 gulp.task('test:unit', (cb) => {
     new KarmaServer({
         basePath: '',
@@ -121,20 +109,27 @@ gulp.task('test:unit', (cb) => {
     }, cb).start();
 });
 
-gulp.task('scripts', ['scripts:templates', 'scripts:vendor', 'scripts:source']);
+gulp.task('scripts', () => {
+    runSequence('scripts:templates', 'scripts:vendor', 'scripts:source');
+});
 gulp.task('styles', ['styles:source', 'styles:bootstrap']);
 gulp.task('build', ['scripts', 'styles', 'html']);
-gulp.task('test', ['test:unit', 'test:lint']);
+gulp.task('stage', () => {
+    runSequence('clean', 'build');
+});
+gulp.task('test', ['test:unit']);
+
+gulp.task('clean', () => del(paths.dist+'/*'));
 
 gulp.task('default', () => {
 
-    runSequence('build', 'test');
+    runSequence('stage', 'test');
 
-    gulp.watch(paths.sourceJs, function() {
+    gulp.watch(paths.sourceJs, () => {
         runSequence('scripts:source','test');
     });
-    gulp.watch(`${paths.src}/**/*.html`, ['templates']);
+    gulp.watch(`${paths.src}/**/*.html`, ['scripts:templates']);
     gulp.watch(paths.lessFiles, ['styles:source']);
-    gulp.watch(`${paths.src}/index.html`, ['copy']);
+    gulp.watch(`${paths.src}/index.html`, ['html']);
 });
 
